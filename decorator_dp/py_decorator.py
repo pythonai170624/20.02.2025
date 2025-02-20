@@ -1,5 +1,6 @@
 import time
 import logging
+from abc import abstractmethod, ABC
 
 logging.basicConfig(filename='app.log', level=logging.DEBUG,
                     format='%(asctime)s - %(levelname)s - %(message)s')
@@ -54,11 +55,11 @@ def timer(func):
 
 @timer
 def slow_function():
-    time.sleep(2)
+    time.sleep(0.2)
 
 @timer
 def connect_remote_mongo():
-    time.sleep(3)
+    time.sleep(0.3)
 
 slow_function()
 connect_remote_mongo()
@@ -67,3 +68,31 @@ connect_remote_mongo()
 # try-except around the function
 #  in the except write error to log file
 #  create function div which divides by zero
+
+def safe_run(func):
+    def wrapper(*args, **kwargs):
+        try:
+            result = func(*args, **kwargs)
+            return result
+        except Exception as e:
+            print(f"function [{func.__name__}] Error = {e}. args={args}")
+            logging.error(f"function [{func.__name__}] Error {e}. args={args}")
+    return wrapper
+
+@safe_run
+def divide(a, b):
+    c = a / b
+    return c
+
+print(divide(3, 0))
+print(divide(3, 2))
+
+# Aspect Orientation Programming
+
+# a = 5
+# b = 1
+# expected = 6
+# actual = calculator.add(a, b)
+# assert actual == expected
+
+
