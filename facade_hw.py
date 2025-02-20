@@ -24,3 +24,13 @@ class AirConditioner:
 
     def set_temperature(self, temp):
         print(f"Air Conditioner set to {temp}°C")
+
+class PopcornMachine:
+    def turn_on(self):
+        print("Popcorn Machine is ON and warming up...")
+    
+    def pop_corn(self):
+        print("Popcorn is popping! 🍿")
+
+    def turn_off(self):
+        print("Popcorn Machine is OFF")
