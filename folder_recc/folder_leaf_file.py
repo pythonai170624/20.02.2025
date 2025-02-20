@@ -1,29 +1,32 @@
 from abc import ABC, abstractmethod
+from typing import override
 
 from folder_recc.folder_component import Component
 
+class File(Component):
 
-class Composite(Component):
-
-    def __init__(self, name):
+    def __init__(self, name, size):
         super().__init__(name)
+        self.__size = size
 
-    @abstractmethod
+    @override
     def add_child(self, child: Component):
-        self.children.append(child)
+        raise NotImplementedError
 
-    @abstractmethod
+    @override
     def remove_file(self, child: Component):
-        self.children.remove(child)
+        raise NotImplementedError
 
-    # @override
-    # def get_size(self):
-    #     return sum(file.get_size() for file in self.files)
+    @override
+    def get_size(self):
+        return self.__size
 
-    @abstractmethod
+    @override
+    def set_size(self):
+        pass
+
+    @override
     def print(self, space):
         # folder_size = format_size(self.get_size())
         # print(space + self.name,folder_size)
-        print(space, self.name)
-        for file in self.children:
-            file.print(space + 4 * " ")
+        print(space, self.name, Component.format_size(self.__size))

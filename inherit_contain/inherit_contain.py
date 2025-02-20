@@ -16,17 +16,74 @@ class Credit(IPayment):
     def pay(self):
         print('oper-D')
 
-# inheritance
+# inheritance (implement)
 # class MobilePhone(IPayment):
 #     def __init__(self, number, model)
-#         self ...
+
 #     @override
 #     def pay(self):
 #         print('oper-D')
 
 # strategy - contain
 # class MobilePhone():
-#     def __init__(self, pay_impl):
-#         self.pay_impl = pay_impl
-#     def change_payment(self, pay_impl):
-#         self.pay_impl = pay_impl
+#     def __init__(self, payer: IPayment):
+#         self.payer = payer
+#     def change_payment(self, payer: IPayment):
+#         self.payer = payer
+
+
+class IFly:
+    @abstractmethod
+    def fly(self):
+        pass
+
+class Superman(IFly):
+    @override
+    def fly(self):
+        print('fly')
+
+# class Bycycle(IFly):
+#     @override
+#     def fly(self):
+#         raise NotImplemented
+
+class Bycycle(IFly):
+    def __init__(self, flyer: IFly):
+        self.flyer = flyer
+
+    @override
+    def fly(self):
+        self.flyer.fly()
+
+class CannotFly(IFly):
+    @override
+    def fly(self):
+        raise NotImplementedError
+
+class NewFlyingBycler(IFly):
+    @override
+    def fly(self):
+        print('flying bycycle....')
+
+b = Bycycle(CannotFly())
+b.fly()  # Error
+b.flyer = NewFlyingBycler()
+b.fly()
+b.flyer = CannotFly()
+b.fly()  # Error
+
+
+class IGo_0_100_3_seconds:
+    @abstractmethod
+    def go_fast(self):
+        pass
+
+
+
+
+
+
+
+
+
+
